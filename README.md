@@ -1,4 +1,3 @@
-
 # Integração de Sistemas
 ### Assignment #2 - Three-tier Programming with Object-Relational Mapping
 
@@ -24,6 +23,16 @@ In this project, students will develop a web application to manage a bus company
 - [ ] As a company manager I want to search for all bus trips occurring on a given date. 
 - [ ] As a company manager I want to list all passengers on a given trip listed during one of the previous searches. 
 - [ ] The system sends a daily summary of the revenues of that day’s trips to the managers.
+
+**Additional Remarks**
+
+Finally, the following points apply: 
+- **Passwords should not be stored in clear text**. Students should store hashed passwords in the database. 
+- **Students must use a logging tool**. 
+- Students should be very careful about choosing between stateless beans and stateful beans. Also, they should be very careful about <ins>not passing huge amounts of information between application layers (e.g., in queries)</ins>, when they don’t need to. 
+- Students should be careful to avoid violating layers, e.g., they must not perform business logic operations in the presentation layer. 
+- Students need to <ins>be careful about authentication</ins> when they access the EJBs. They must verify each access to protected resources, or otherwise anyone could do a lookup to invoke an EJB. 
+- Consider the possibility of developing an entire text-based interface, starting only the web tier after the implementation of the most important functionality. Please note that the weight of the web interface in the final grade is small.
 
 ## Setup with Docker (recommended)
 1. Make sure you have your ssh keys in the home folder of the OS that is running docker
