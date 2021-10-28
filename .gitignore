@@ -1,0 +1,29 @@
+# RUBY #
+.bundle/
+vendor/bundle/
+.irb_history
+
+# RAILS #
+log/*
+tmp/*
+tmp/pids/*
+storage/*
+public/assets/
+.byebug_history
+config/master.key
+public/packs/
+public/packs-test/
+
+# NPM #
+node_modules/
+yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# DOCKER #
+docker/development/home/
+
+# GENERAL #
+.env
+
+# AUTOMATICALLY APPENDED #
