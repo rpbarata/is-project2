@@ -25,37 +25,27 @@ class TripsController < ApplicationController
   def create
     @trip = Trip.new(trip_params)
 
-    respond_to do |format|
-      if @trip.save
-        format.html { redirect_to(@trip, notice: "Trip was successfully created.") }
-        format.json { render(:show, status: :created, location: @trip) }
-      else
-        format.html { render(:new, status: :unprocessable_entity) }
-        format.json { render(json: @trip.errors, status: :unprocessable_entity) }
-      end
+    if @trip.save
+      redirect_to(@trip, notice: "Trip was successfully created.")
+    else
+      render(:new, status: :unprocessable_entity)
     end
   end
 
   # PATCH/PUT /trips/1 or /trips/1.json
   def update
-    respond_to do |format|
-      if @trip.update(trip_params)
-        format.html { redirect_to(@trip, notice: "Trip was successfully updated.") }
-        format.json { render(:show, status: :ok, location: @trip) }
-      else
-        format.html { render(:edit, status: :unprocessable_entity) }
-        format.json { render(json: @trip.errors, status: :unprocessable_entity) }
-      end
+    if @trip.update(trip_params)
+      redirect_to(@trip, notice: "Trip was successfully updated.")
+    else
+      render(:edit, status: :unprocessable_entity)
     end
   end
 
   # DELETE /trips/1 or /trips/1.json
   def destroy
     @trip.destroy
-    respond_to do |format|
-      format.html { redirect_to(trips_url, notice: "Trip was successfully destroyed.") }
-      format.json { head(:no_content) }
-    end
+
+    redirect_to(trips_url, notice: "Trip was successfully destroyed.")
   end
 
   private
