@@ -15,9 +15,9 @@ In this project, students will develop a web application to manage a bus company
 - [ ] As a user, I want to delete my account, thus erasing all traces of my existence from the system, including my available items.
 - [X] As a user, I want to list the available trips, providing date intervals.
 - [X] As a user, I want to charge my wallet to be able to purchase tickets. (You may ignore the step that involves the payment itself)
-- [ ] As a user, I want to purchase a ticket. I should be able to select the place.
-- [ ] As a user, I may be able to return a ticket for future trips and get a reimbursement in my wallet.
-- [ ] As a user, I can list my trips.
+- [X] As a user, I want to purchase a ticket. I should be able to select the place.
+- [X] As a user, I may be able to return a ticket for future trips and get a reimbursement in my wallet.
+- [X] As a user, I can list my trips.
 - [ ] As a company manager, I want to create future bus trips, including the departure date and hour, departure point, destination, capacity, and price. You may assume that departure and destination points are limited.
 - [ ] As a company manager, I want to delete future bus trips. The money of all tickets should be returned to the correct wallets, and the system should warn the affected users by email.
 - [ ] As a company manager I want to list the passengers that have made more trips (e.g., the top 5).

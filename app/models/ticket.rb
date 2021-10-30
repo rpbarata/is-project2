@@ -23,4 +23,14 @@
 class Ticket < ApplicationRecord
   belongs_to :user
   belongs_to :trip
+
+  before_destroy :refund_user
+
+  def refund_user
+    user.wallet.deposit(trip.price)
+  end
+
+  def future_trip?
+    trip.departure_time.future?
+  end
 end

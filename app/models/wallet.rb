@@ -26,7 +26,7 @@ class Wallet < ApplicationRecord
   def deposit(value)
     self.balance += value
 
-    save!
+    save
   end
 
   def purchase(value)
