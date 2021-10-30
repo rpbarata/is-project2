@@ -14,4 +14,18 @@
 #  updated_at      :datetime         not null
 #
 class Trip < ApplicationRecord
+  class << self
+    def select_by_date(start_date, end_date)
+      if start_date.present? && end_date.present?
+        where("departure_time BETWEEN :start_date AND :end_date",
+          start_date: start_date.beginning_of_day, end_date: end_date.end_of_day).distinct
+      elsif start_date.present?
+        where("departure_time > :start_date", start_date: start_date.beginning_of_day).distinct
+      elsif end_date.present?
+        where("departure_time < :end_date", end_date: end_date.end_of_day).distinct
+      else
+        all
+      end
+    end
+  end
 end

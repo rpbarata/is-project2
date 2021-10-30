@@ -36,11 +36,15 @@ gem "rails_semantic_logger", "~> 4.4", ">= 4.4.4"
 # gem "devise"
 # gem "devise-i18n"
 gem "tzinfo-data", "~> 1.2021", ">= 1.2021.1"
+gem "kaminari"
 
 group :development, :test do
   gem "bullet"
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
+  gem "factory_bot_rails"
+  gem "faker"
+  gem "rubocop-faker"
 end
 
 group :development do

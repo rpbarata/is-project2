@@ -1,0 +1,42 @@
+<div class="row justify-content-center">
+  <div class="col-4">
+    <h1 class="text-center">Perfil</h1>
+
+    <%= form_with model: @user, url: edit_profile_path do |f| %>
+      <% if @user.errors.any? %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <h4 class="alert-heading">There are <%= pluralize(@user.errors.count, "error") %></h4>
+          <hr>
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= f.label :email, for: "registrationEditEmail", class: "form-label"%>
+        <%= f.text_field :email, class: "form-control", id: "registrationEditEmail", "aria-describedby": "emailHelp" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :username, for: "registrationEditUsername", class: "form-label"%>
+        <%= f.text_field :username, class: "form-control", id: "registrationEditUsername", "aria-describedby": "usernameHelp" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password, for: "registrationEditEmailPassword", class: "form-label" %>
+        <%= f.password_field :password, class: "form-control", id: "registrationEditEmailPassword" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password_confirmation, for: "registrationEditEmailPasswordConfirmation", class: "form-label" %>
+        <%= f.password_field :password_confirmation, class: "form-control", id: "registrationEditEmailPasswordConfirmation" %>
+      </div>
+
+      <%= f.submit class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

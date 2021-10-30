@@ -5,7 +5,10 @@ class TripsController < ApplicationController
 
   # GET /trips or /trips.json
   def index
-    @trips = Trip.all
+    start_date = params[:start_date]&.in_time_zone
+    end_date = params[:end_date]&.in_time_zone
+
+    @trips = Trip.select_by_date(start_date, end_date).order("departure_time ASC").page(params[:page])
   end
 
   # GET /trips/1 or /trips/1.json

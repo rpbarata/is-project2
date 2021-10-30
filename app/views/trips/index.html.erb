@@ -1,37 +1,54 @@
-<p id="notice"><%= notice %></p>
+<%= form_tag trips_path, method: :get do %>
+  <div class="row">
+    <div class="col">
+      <div class="form-group" style="display: inline-block">
+        <%= label_tag(:start_date, "Start Date") %>
+        <%= date_field_tag :start_date, params[:start_date], class: "form-control", data: { picker: true } %>
+      </div>
+      <div class="form-group" style="display: inline-block">
+        <%= label_tag(:end_date, "End Date") %>
+        <%= date_field_tag :end_date, params[:end_date], class: "form-control", data: { picker: true } %>
+      </div>
+      <div class="form-group"  style="display: inline-block">
+        <button class="btn btn-light has-icon" type="button" onclick="this.form.submit()">
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>
 
-<h1>You are Logged In, <%= current_user.email %></h1>
-
-<h1>Trips</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Departure time</th>
-      <th>Departure point</th>
-      <th>Destination</th>
-      <th>Capacity</th>
-      <th>Price</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @trips.each do |trip| %>
+<div class="table-responsive">
+  <table class="table table-sm table-striped table-hover">
+    <caption>Trips</caption>
+    <thead>
       <tr>
-        <td><%= trip.departure_time %></td>
-        <td><%= trip.departure_point %></td>
-        <td><%= trip.destination %></td>
-        <td><%= trip.capacity %></td>
-        <td><%= trip.price %></td>
-        <td><%= link_to 'Show', trip %></td>
-        <td><%= link_to 'Edit', edit_trip_path(trip) %></td>
-        <td><%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th scope="col">Departure time</th>
+        <th scope="col">Departure point</th>
+        <th scope="col">Destination</th>
+        <th scope="col">Capacity</th>
+        <th scope="col">Price</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @trips.each do |trip| %>
+        <tr>
+          <td><%= trip.departure_time %></td>
+          <td><%= trip.departure_point %></td>
+          <td><%= trip.destination %></td>
+          <td><%= trip.capacity %></td>
+          <td><%= number_to_currency(trip.price, :unit => "€") %></td>
+          <td><%= link_to 'Show', trip %></td>
+          <td><%= link_to 'Edit', edit_trip_path(trip) %></td>
+          <td><%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= paginate @trips %>
 
 <%= link_to 'New Trip', new_trip_path %>

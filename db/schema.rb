@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_29_215140) do
+ActiveRecord::Schema.define(version: 2021_10_30_020036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,4 +34,13 @@ ActiveRecord::Schema.define(version: 2021_10_29_215140) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "wallets", force: :cascade do |t|
+    t.decimal "balance", precision: 8, scale: 2, default: "0.0"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_wallets_on_user_id"
+  end
+
+  add_foreign_key "wallets", "users"
 end

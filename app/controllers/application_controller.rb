@@ -14,6 +14,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authorized
-    redirect_to(sign_in_path, alert: 'You must be signed in') unless logged_in?
+    redirect_to(sign_in_path, alert: "You must be signed in") unless logged_in?
   end
 end

@@ -1,18 +1,38 @@
-<h1>Sign Up</h1>
-<%= form_with model: @user, url: sign_up_path do |f| %>
-  <p>
-    <%= f.label 'email' %><br>
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label 'password' %><br>
-    <%= f.password_field :password %>
-  </p>
-  <p>
-    <%= f.label 'password_confirmation' %><br>
-    <%= f.password_field :password_confirmation %>
-  </p>
-  <p>
-    <%= f.submit 'Sign Up' %>
-  </p>
-<% end %>
+<div class="row justify-content-center">
+  <div class="col-4">
+    <h1 class="text-center">Sign Up</h1>
+
+    <%= form_with model: @user, url: sign_up_path do |f| %>
+      <% if @user.errors.any? %>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+          <h4 class="alert-heading">There are <%= pluralize(@user.errors.count, "error") %></h4>
+          <hr>
+          <ul>
+            <% @user.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      <% end %>
+
+      <div class="mb-3">
+        <%= f.label :email, for: "registrationNewEmail", class: "form-label"%>
+        <%= f.text_field :email, class: "form-control", id: "registrationNewEmail", "aria-describedby": "emailHelp" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password, for: "registrationNewEmailPassword", class: "form-label" %>
+        <%= f.password_field :password, class: "form-control", id: "registrationNewEmailPassword" %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.label :password_confirmation, for: "registrationNewEmailPasswordConfirmation", class: "form-label" %>
+        <%= f.password_field :password_confirmation, class: "form-control", id: "registrationNewEmailPasswordConfirmation" %>
+      </div>
+
+      <%= f.submit 'Sign Up', class: "btn btn-primary" %>
+      <p class="text-end"><%= link_to "Sign In", sign_in_path %></p>
+    <% end %>
+  </div>
+</div>
