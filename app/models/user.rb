@@ -18,6 +18,8 @@
 class User < ApplicationRecord
   has_secure_password
   has_one :wallet, dependent: :destroy
+  has_many :tickets, dependent: :destroy
+  has_many :trips, through: :tickets
 
   VALID_EMAIL_FORMAT = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
@@ -41,5 +43,19 @@ class User < ApplicationRecord
 
   def create_wallet
     self.wallet = Wallet.new
+  end
+
+  def buy_trip(trip)
+    success = false
+    ActiveRecord::Base.transaction do
+      ticket = Ticket.new
+      ticket.user = self
+      ticket.trip = trip
+
+      if (success = wallet.purchase(trip.price))
+        success = ticket.save!
+      end
+    end
+    success
   end
 end

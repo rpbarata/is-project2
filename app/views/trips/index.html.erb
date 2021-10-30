@@ -28,7 +28,7 @@
         <th scope="col">Destination</th>
         <th scope="col">Capacity</th>
         <th scope="col">Price</th>
-        <th colspan="3"></th>
+        <th colspan="1"></th>
       </tr>
     </thead>
 
@@ -38,11 +38,15 @@
           <td><%= trip.departure_time %></td>
           <td><%= trip.departure_point %></td>
           <td><%= trip.destination %></td>
-          <td><%= trip.capacity %></td>
+          <td><%= trip.current_capacity %></td>
           <td><%= number_to_currency(trip.price, :unit => "€") %></td>
-          <td><%= link_to 'Show', trip %></td>
-          <td><%= link_to 'Edit', edit_trip_path(trip) %></td>
-          <td><%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <td>
+            <% unless current_user.trips.find_by(id: trip.id) %>
+              <%= form_tag buy_trip_path(trip), method: :patch do %>
+                <%= submit_tag "Buy", class: "btn btn-light has-icon", data: { confirm: 'Are you sure?' } %>
+              <% end %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -50,5 +54,3 @@
 </div>
 
 <%= paginate @trips %>
-
-<%= link_to 'New Trip', new_trip_path %>

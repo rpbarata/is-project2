@@ -3,7 +3,10 @@
 Rails.application.routes.draw do
   root "trips#index"
 
-  resources :trips
+  resources :tickets
+
+  get "trips", to: "trips#index"
+  patch "buy_trip/:id", to: "trips#buy_trip", as: "buy_trip"
 
   get "wallet", to: "wallet#show"
   patch "wallet", to: "wallet#update"

@@ -14,6 +14,13 @@
 #  updated_at      :datetime         not null
 #
 class Trip < ApplicationRecord
+  has_many :tickets, dependent: :restrict_with_error
+  has_many :users, through: :tickets
+
+  def current_capacity
+    capacity - tickets.count
+  end
+
   class << self
     def select_by_date(start_date, end_date)
       if start_date.present? && end_date.present?
