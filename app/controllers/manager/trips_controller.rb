@@ -21,6 +21,11 @@ class Manager::TripsController < ManagerController
     end
   end
 
+  def show
+    @trip = Trip.find(params[:id])
+    @passengers = @trip.users.page(params[:page])
+  end
+
   def destroy
   end
 

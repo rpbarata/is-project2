@@ -70,4 +70,8 @@ class User < ApplicationRecord
     end
     success
   end
+
+  def get_ticket(trip)
+    tickets.find_by(trip: trip)
+  end
 end

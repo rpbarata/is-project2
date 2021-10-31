@@ -23,7 +23,7 @@ In this project, students will develop a web application to manage a bus company
 - [ ] As a company manager I want to list the passengers that have made more trips (e.g., the top 5).
 - [X] As a company manager I want to search for all bus trips sorted by date between two date limits.
 - [ ] As a company manager I want to search for all bus trips occurring on a given date.
-- [ ] As a company manager I want to list all passengers on a given trip listed during one of the previous searches.
+- [X] As a company manager I want to list all passengers on a given trip listed during one of the previous searches.
 - [ ] The system sends a daily summary of the revenues of that day’s trips to the managers.
 
 **Additional Remarks**

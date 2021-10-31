@@ -20,36 +20,37 @@
   </div>
 
   <div class="col d-flex flex-row-reverse bd-highlight">
-      <%= button_to "New", new_manager_trip_path, class: "btn btn-primary", method: :get %>
+    <%= button_to "New", new_manager_trip_path, class: "btn btn-primary", method: :get %>
   </div>
+</div>
 
-  <div class="table-responsive">
-    <table class="table table-sm table-striped table-hover">
-      <caption>Trips</caption>
-      <thead>
+<div class="table-responsive">
+  <table class="table table-sm table-striped table-hover">
+    <caption>Trips</caption>
+    <thead>
+      <tr>
+        <th scope="col">Departure time</th>
+        <th scope="col">Departure point</th>
+        <th scope="col">Destination</th>
+        <th scope="col">Capacity</th>
+        <th scope="col">Price</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @trips.each do |trip| %>
         <tr>
-          <th scope="col">Departure time</th>
-          <th scope="col">Departure point</th>
-          <th scope="col">Destination</th>
-          <th scope="col">Capacity</th>
-          <th scope="col">Price</th>
-          <th colspan="1"></th>
+          <td><%= trip.departure_time %></td>
+          <td><%= trip.departure_point %></td>
+          <td><%= trip.destination %></td>
+          <td><%= format_trip_capacity(trip) %></td>
+          <td><%= number_to_currency(trip.price, :unit => "€") %></td>
+          <td><%= link_to "Show", manager_trip_path(trip)  %></td>
         </tr>
-      </thead>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-      <tbody>
-        <% @trips.each do |trip| %>
-          <tr>
-            <td><%= trip.departure_time %></td>
-            <td><%= trip.departure_point %></td>
-            <td><%= trip.destination %></td>
-            <td><%= trip.current_capacity %></td>
-            <td><%= number_to_currency(trip.price, :unit => "€") %></td>
-            <td></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-
-  <%= paginate @trips %>
+<%= paginate @trips %>
