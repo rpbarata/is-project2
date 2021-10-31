@@ -13,6 +13,7 @@ class UserTicketsController < ApplicationController
     success = false
     if ticket.future_trip?
       ActiveRecord::Base.transaction do
+        ticket.refund_user
         success = ticket.destroy
       end
     end

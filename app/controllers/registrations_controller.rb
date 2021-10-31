@@ -35,6 +35,17 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  def destroy
+    @user = current_user
+
+    if @user.destroy
+      redirect_to(sign_in_path,
+        notice: "Your account has been deleted successfully.")
+    else
+      redirect_to(edit_profile_path, alert: "It was not possible to delete your account.")
+    end
+  end
+
   private
 
   def user_params

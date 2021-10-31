@@ -12,7 +12,7 @@ In this project, students will develop a web application to manage a bus company
 - [X] As a user, I want to authenticate and start a session with my e-mail and password.
 - [X] As a user, I want to logout from any location or screen.
 - [X] As a user, I want to edit my personal information.
-- [ ] As a user, I want to delete my account, thus erasing all traces of my existence from the system, including my available items.
+- [X] As a user, I want to delete my account, thus erasing all traces of my existence from the system, including my available items.
 - [X] As a user, I want to list the available trips, providing date intervals.
 - [X] As a user, I want to charge my wallet to be able to purchase tickets. (You may ignore the step that involves the payment itself)
 - [X] As a user, I want to purchase a ticket. I should be able to select the place.
