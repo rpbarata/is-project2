@@ -17,6 +17,20 @@ class Trip < ApplicationRecord
   has_many :tickets, dependent: :restrict_with_error
   has_many :users, through: :tickets
 
+  validates :capacity, numericality: { only_integer: true, greater_than: 0 }, presence: true
+  validates :departure_point, presence: true
+  validate  :validates_departure_time
+  validates :departure_time, presence: true
+  validates :destination, presence: true
+  validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true
+
+  # validate  :validates_departure_time
+  def validates_departure_time
+    if departure_time.present? && departure_time < Time.zone.now
+      errors.add(:departure_time, "can't be in the past")
+    end
+  end
+
   def current_capacity
     capacity - tickets.count
   end

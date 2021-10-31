@@ -1,0 +1,39 @@
+<h1 class="mb-3">Top Passengers</h1>
+
+<%= form_tag manager_passengers_path, method: :get do %>
+  <div class="row">
+    <div class="col">
+      <div class="form-group" style="display: inline-block">
+        <%= label_tag(:limit, "Limit") %>
+        <%= number_field_tag(:limit, params[:limit], class: "form-control") %>
+      </div>
+      <div class="form-group"  style="display: inline-block">
+        <button class="btn btn-light has-icon" type="button" onclick="this.form.submit()">
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>
+<div class="table-responsive">
+  <table class="table table-sm table-striped table-hover">
+    <caption>Passengers</caption>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Nº Tickets</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @passengers.each do |passenger| %>
+        <tr>
+          <td><%= passenger.username %></td>
+          <td><%= passenger.email %></td>
+          <td><%= passenger.tickets.count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
