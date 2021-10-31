@@ -38,5 +38,7 @@
 
       <%= f.submit class: "btn btn-primary" %>
     <% end %>
+
+    <%= button_to "Delete Account", delete_account_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger mt-3"  %>
   </div>
 </div>
