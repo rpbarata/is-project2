@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col-4">
-    <h1 class="text-center">Perfil</h1>
+    <h1 class="text-center">Profile</h1>
 
     <%= form_with model: @user, url: edit_profile_path do |f| %>
       <% if @user.errors.any? %>
@@ -36,9 +36,15 @@
         <%= f.password_field :password_confirmation, class: "form-control", id: "registrationEditEmailPasswordConfirmation" %>
       </div>
 
-      <%= f.submit class: "btn btn-primary" %>
+      <div class="row">
+        <div class="col ">
+          <%= button_to "Delete Account", delete_account_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger"  %>
+        </div>
+        <div class="col d-flex flex-row-reverse">
+          <%= f.submit class: "btn btn-primary" %>
+        </div>
+      </div>
     <% end %>
 
-    <%= button_to "Delete Account", delete_account_path, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger mt-3"  %>
   </div>
 </div>

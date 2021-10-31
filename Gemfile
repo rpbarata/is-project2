@@ -38,6 +38,7 @@ gem "rails_semantic_logger", "~> 4.4", ">= 4.4.4"
 # gem "devise-i18n"
 gem "tzinfo-data", "~> 1.2021", ">= 1.2021.1"
 gem "kaminari"
+gem "font-awesome-rails"
 
 group :development, :test do
   gem "bullet"
