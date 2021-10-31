@@ -52,7 +52,7 @@ class User < ApplicationRecord
 
   # before_save
   def set_default_role
-    unless role.present?
+    if role.blank?
       self.role = :passenger
     end
   end

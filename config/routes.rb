@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  
   namespace :manager do
     resources :trips
+    resources :passengers, only: [:index]
   end
-  
+
   resources :user_tickets, only: [:index, :destroy]
 
   get "trips",          to: "trips#index"
