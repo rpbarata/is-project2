@@ -19,10 +19,11 @@ class UserTicketsController < ApplicationController
     end
 
     if success
-      redirect_to(user_tickets_path,
-        notice: "The ticket has been canceled and the money will be refunded to your wallet.")
+      logger.info(t("logger.info.destroy", record_type: ticket.model_name.human, id: ticket.id))
+      redirect_to(user_tickets_path, notice: t("notice.cancel_trip"))
     else
-      redirect_to(user_tickets_path, alert: "It was not possible to cancel the ticket.")
+      logger.info(t("error.info.destroy", record_type: ticket.model_name.human, id: ticket.id))
+      redirect_to(user_tickets_path, alert: t("alert.cancel_trip"))
     end
   end
 end

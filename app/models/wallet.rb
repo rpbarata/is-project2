@@ -24,7 +24,7 @@ class Wallet < ApplicationRecord
   validates :balance, numericality: { greater_than_or_equal_to: 0 }
 
   def deposit(value)
-    self.balance += value
+    self.balance += value.to_d
 
     save
   end

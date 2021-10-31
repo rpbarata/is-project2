@@ -12,24 +12,21 @@
         <%= date_field_tag :end_date, params[:end_date], class: "form-control", data: { picker: true } %>
       </div>
       <div class="form-group"  style="display: inline-block">
-        <button class="btn btn-light has-icon" type="button" onclick="this.form.submit()">
-          Search
-        </button>
+        <%= submit_tag "Search", class: "btn btn-primary btn-sm"%>
       </div>
     </div>
   </div>
 <% end %>
 
 <div class="table-responsive">
-  <table class="table table-sm table-striped table-hover">
-    <caption>Trips</caption>
+  <table class="table table-sm table-striped table-hover align-middle">
     <thead>
       <tr>
-        <th scope="col">Departure time</th>
-        <th scope="col">Departure point</th>
-        <th scope="col">Destination</th>
-        <th scope="col">Capacity</th>
-        <th scope="col">Price</th>
+        <th scope="col" >Departure time</th>
+        <th scope="col" class="text-center">Departure point</th>
+        <th scope="col" class="text-center">Destination</th>
+        <th scope="col" class="text-center">Capacity</th>
+        <th scope="col" class="text-center">Price</th>
         <th colspan="1"></th>
       </tr>
     </thead>
@@ -37,16 +34,14 @@
     <tbody>
       <% @trips.each do |trip| %>
         <tr>
-          <td><%= trip.departure_time %></td>
-          <td><%= trip.departure_point %></td>
-          <td><%= trip.destination %></td>
-          <td><%= trip.current_capacity %></td>
-          <td><%= number_to_currency(trip.price, :unit => "€") %></td>
+          <td><%= l(trip.departure_time) %></td>
+          <td class="text-center"><%= trip.departure_point %></td>
+          <td class="text-center"><%= trip.destination %></td>
+          <td class="text-center"><%= trip.current_capacity %></td>
+          <td class="text-center"><%= number_to_currency(trip.price, :unit => "€") %></td>
           <td>
-            <% unless current_user.trips.find_by(id: trip.id) %>
-              <%= form_tag buy_trip_path(trip), method: :patch do %>
-                <%= submit_tag "Buy", class: "btn btn-light has-icon", data: { confirm: 'Are you sure?' } %>
-              <% end %>
+            <% if !current_user.trips.find_by(id: trip.id) && trip.departure_time.future? %>
+              <%= button_to "Buy", buy_trip_path(trip, page: params[:page]), method: :patch, class: "btn btn-success btn-sm", data: { confirm: 'Are you sure?' } %>
             <% end %>
           </td>
         </tr>

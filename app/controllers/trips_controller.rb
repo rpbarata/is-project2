@@ -14,9 +14,11 @@ class TripsController < ApplicationController
     trip = Trip.find(params[:id])
 
     if current_user.buy_trip(trip)
-      redirect_to(trips_path, notice: "Congratulations! You bought a trip.")
+      logger.info(t("logger.info.bought_trip", user_id: current_user.id, trip_id: trip.id))
+      redirect_to(user_tickets_path, notice: t("notice.bought_trip"))
     else
-      redirect_to(trips_path, alert: "It was not possible to buy the trip.")
+      logger.info(t("logger.error.bought_trip", user_id: current_user.id, trip_id: trip.id))
+      redirect_to(trips_path(page: params[:page]), alert: t("alert.bought_trip"))
     end
   end
 end

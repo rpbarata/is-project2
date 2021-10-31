@@ -1,14 +1,13 @@
 <h1 class="mb-3">My Tickets</h1>
 
 <div class="table-responsive">
-  <table class="table table-sm table-striped table-hover">
-    <caption>My Tickets</caption>
+  <table class="table table-sm table-striped table-hover align-middle">
     <thead>
       <tr>
         <th scope="col">Departure time</th>
-        <th scope="col">Departure point</th>
-        <th scope="col">Destination</th>
-        <th scope="col">Price</th>
+        <th scope="col" class="text-center">Departure point</th>
+        <th scope="col" class="text-center">Destination</th>
+        <th scope="col" class="text-center">Price</th>
         <th colspan="1"></th>
       </tr>
     </thead>
@@ -16,11 +15,11 @@
     <tbody>
       <% @tickets.each do |ticket| %>
         <tr>
-          <td><%= ticket.trip.departure_time %></td>
-          <td><%= ticket.trip.departure_point %></td>
-          <td><%= ticket.trip.destination %></td>
-          <td><%= number_to_currency(ticket.trip.price, :unit => "€") %></td>
-          <td>
+          <td><%= l(ticket.trip.departure_time) %></td>
+          <td class="text-center"><%= ticket.trip.departure_point %></td>
+          <td class="text-center"><%= ticket.trip.destination %></td>
+          <td class="text-center"><%= number_to_currency(ticket.trip.price, :unit => "€") %></td>
+          <td class="text-center">
             <% if ticket.future_trip? %>
               <%= button_to "Return", user_ticket_path(ticket), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm"  %>
             <% end %>

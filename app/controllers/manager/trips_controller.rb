@@ -17,9 +17,11 @@ module Manager
       @trip = Trip.new(trip_params)
 
       if @trip.save
-        redirect_to(manager_trips_path, notice: "New trip created")
+        redirect_to(manager_trips_path, notice: t("notice.new", record_type: @trip.model_name.human.downcase))
+        logger.info(t("logger.info.new", record_type: @trip.model_name.human, id: @trip.id))
       else
-        flash.now[:alert] = "Unable to create a new trip"
+        flash.now[:alert] = t("alert.new", record_type: @trip.model_name.human.downcase)
+        logger.error(t("logger.error.new", record_type: @trip.model_name.human))
         render(:new)
       end
     end

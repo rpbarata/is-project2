@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
 class WalletController < ApplicationController
-  def show
-    @wallet = current_user.wallet
-  end
+  before_action :set_wallet
+
+  def show; end
 
   def update
-    @wallet = current_user.wallet
-
-    current_balance = @wallet.balance
-    new_balance = current_balance + wallet_params[:add_balance].to_d
-
-    if wallet_params[:add_balance].to_d > 0 && @wallet.update(balance: new_balance)
-      redirect_to(wallet_path, notice: "Your wallet has been charged")
+    if wallet_params[:add_balance].to_d <= 0
+      flash.now[:alert] = "You must charge your wallet with a positive value"
+      logger.info(t("logger.error.charge_wallet", user_id: current_user.id))
+      render("show")
+    elsif @wallet.deposit(wallet_params[:add_balance])
+      logger.info(t("logger.info.charge_wallet", user_id: current_user.id))
+      redirect_to(wallet_path, notice: t("notice.charge_wallet"))
     else
-      flash.now[:alert] = "Unable to charge your wallet"
+      flash.now[:alert] = t("alert.charge_wallet")
+      logger.info(t("logger.error.charge_wallet", user_id: current_user.id))
       render("show")
     end
   end
@@ -23,5 +24,9 @@ class WalletController < ApplicationController
 
   def wallet_params
     params.require(:wallet).permit(:add_balance)
+  end
+
+  def set_wallet
+    @wallet = current_user.wallet
   end
 end

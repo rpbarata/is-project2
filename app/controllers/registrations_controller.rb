@@ -2,6 +2,7 @@
 
 class RegistrationsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:new, :create]
+  before_action :set_user, only: [:edit, :update, :destroy]
 
   def new
     @user = User.new
@@ -12,38 +13,37 @@ class RegistrationsController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to(root_path, notice: "Successfully created account")
+      redirect_to(root_path, notice: t("notice.new", record_type: @user.model_name.human.downcase))
+      logger.info(t("logger.info.new", record_type: @user.model_name.human, id: @user.id))
     else
-      flash.now[:alert] = "Unable to create account"
+      flash.now[:alert] = t("alert.new", record_type: @user.model_name.human.downcase)
+      logger.error(t("logger.error.new", record_type: @user.model_name.human))
       render(:new)
     end
   end
 
-  def edit
-    @user = current_user
-  end
+  def edit; end
 
   def update
-    @user = current_user
-
     params[:user].delete(:password) if params[:user][:password].blank?
 
     if @user.update(user_edit_params)
-      redirect_to(edit_profile_path, notice: "Your profile has been updated")
+      redirect_to(edit_profile_path, notice: t("notice.update", record_type: @user.model_name.human.downcase))
+      logger.info(t("logger.info.update", record_type: @user.model_name.human, id: @user.id))
     else
-      flash.now[:alert] = "Unable to update your profile"
+      flash.now[:alert] = t("alert.update", record_type: @user.model_name.human.downcase)
+      logger.error(t("logger.error.update", record_type: @user.model_name.human, id: @user.id))
       render("edit")
     end
   end
 
   def destroy
-    @user = current_user
-
     if @user.destroy
-      redirect_to(sign_in_path,
-        notice: "Your account has been deleted successfully.")
+      logger.info(t("logger.info.destroy", record_type: @user.model_name.human, id: @user.id))
+      redirect_to(sign_in_path, notice: t("notice.destroy", record_type: @user.model_name.human.downcase))
     else
-      redirect_to(edit_profile_path, alert: "It was not possible to delete your account.")
+      logger.error(t("logger.info.destroy", record_type: @user.model_name.human, id: @user.id))
+      redirect_to(edit_profile_path, alert: t("alert.destroy", record_type: @user.model_name.human.downcase))
     end
   end
 
@@ -55,5 +55,9 @@ class RegistrationsController < ApplicationController
 
   def user_edit_params
     params.require(:user).permit(:email, :password, :password_confirmation, :username)
+  end
+
+  def set_user
+    @user = current_user
   end
 end
