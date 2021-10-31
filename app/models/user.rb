@@ -7,6 +7,7 @@
 #  id              :bigint           not null, primary key
 #  email           :string           not null
 #  password_digest :string
+#  role            :integer
 #  username        :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -36,13 +37,24 @@ class User < ApplicationRecord
 
   before_save { self.email = email.downcase }
   before_save :create_wallet
+  before_save :set_default_role
+
+  enum role: { manager: 1, passenger: 2 }
 
   def formatted_name
     username.presence || email
   end
 
+  # before_save
   def create_wallet
     self.wallet = Wallet.new
+  end
+
+  # before_save
+  def set_default_role
+    unless role.present?
+      self.role = :passenger
+    end
   end
 
   def buy_trip(trip)

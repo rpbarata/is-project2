@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  root "trips#index"
-
+  
+  namespace :manager do
+    resources :trips
+  end
+  
   resources :user_tickets, only: [:index, :destroy]
 
   get "trips",          to: "trips#index"
@@ -20,4 +23,6 @@ Rails.application.routes.draw do
   get "sign_in",   to: "sessions#new"
   post "sign_in",  to: "sessions#create", as: "log_in"
   delete "logout", to: "sessions#destroy"
+
+  root "trips#index"
 end
