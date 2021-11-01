@@ -1,0 +1,7 @@
+:schedule:
+  daily_summary:
+    # cron: '0 * * * * *' # Execute every minute (for testing)
+    cron: '0 23 * * * *' # Execute every day at 23h
+    class: DailySummaryJob
+    description: "Sends a daily summary of the revenues of that day’s trips to the managers."
+

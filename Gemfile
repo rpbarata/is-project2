@@ -39,6 +39,8 @@ gem "rails_semantic_logger", "~> 4.4", ">= 4.4.4"
 gem "tzinfo-data", "~> 1.2021", ">= 1.2021.1"
 gem "kaminari"
 gem "font-awesome-rails"
+gem "sidekiq"
+gem "sidekiq-scheduler"
 
 group :development, :test do
   gem "bullet"

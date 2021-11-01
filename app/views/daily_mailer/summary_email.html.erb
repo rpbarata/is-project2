@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <style>
+    table, th, td {
+      border: 2px solid black;
+      border-collapse: collapse;
+    }
+    tr:nth-child(even) {
+      background-color: #f3f6f4;
+    }
+  </style>
+  <body>
+    <h1>Daily Summary Email</h1>
+
+    <p>Today were made the <b><%= @num_trips %></b> trips with a total revenue of <b><%= @revenue %>€</b></p>
+    <br>
+
+    <table>
+      <tr>
+        <th>Departure Time</th>
+        <th>Departure Point</th>
+        <th>Destination</th>
+        <th>Capacity</th>
+        <th>Nº. Passengers</th>
+        <th>Price</th>
+        <th>Revenue</th>
+      </tr>
+
+      <% @trips.find_each do |trip| %>
+        <tr>
+          <td><%= I18n.l(trip.departure_time) %></td>
+          <td><%= trip.departure_point %></td>
+          <td><%= trip.destination %></td>
+          <td><%= trip.capacity %></td>
+          <td><%= trip.tickets.count %></td>
+          <td><%= trip.price %></td>
+          <td><%= trip.current_revenue %></td>
+        </tr>
+      <% end %>
+
+    </table>
+  </body>
+</html>

@@ -27,6 +27,12 @@ class Trip < ApplicationRecord
   # Why this callback is not working? It is because rails verify the tickets relations before this callback is called?
   # before_destroy :cancel_tickets
 
+  scope :today, -> {
+                  where("departure_time BETWEEN :start_date AND :end_date",
+                    start_date: Time.zone.now.beginning_of_day,
+                    end_date: Time.zone.now.end_of_day)
+                }
+
   # validate  :validates_departure_time
   def validates_departure_time
     if departure_time.present? && departure_time < Time.zone.now
@@ -44,6 +50,10 @@ class Trip < ApplicationRecord
   #     ticket.destroy
   #   end
   # end
+
+  def current_revenue
+    tickets.count * price
+  end
 
   class << self
     def select_by_date(start_date, end_date)

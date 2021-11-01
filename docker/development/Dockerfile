@@ -1,4 +1,4 @@
-FROM ruby:3.0-alpine3.14
+FROM ruby:3.0.2-alpine3.14
 
 # GENERAL ENVS #
 ENV APP_PATH /project
@@ -8,7 +8,7 @@ ENV HOME "$APP_PATH/docker/development/home"
 
 # RUBY ENVS #
 ENV BUNDLE_PATH /bundle
-ENV BUNDLE_BIN "${BUNDLE_PATH}/ruby/3.0.0/bin"
+ENV BUNDLE_BIN "${BUNDLE_PATH}/ruby/3.0.2/bin"
 ENV PATH "${PATH}:${BUNDLE_BIN}"
 ENV BUNDLE_JOBS 4
 ENV RAILS_ENV development
@@ -27,6 +27,6 @@ RUN mkdir $BUNDLE_PATH && chown useradmin:useradmin $BUNDLE_PATH
 
 USER useradmin
 
-ENTRYPOINT [ "docker/development/entrypoint" ]
+# ENTRYPOINT [ "docker/development/entrypoint" ]
 
 EXPOSE 3000

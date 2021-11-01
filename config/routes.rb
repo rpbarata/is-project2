@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-Rails.application.routes.draw do
-  mount Maily::Engine, at: "/maily"
+require "sidekiq/web"
 
+Rails.application.routes.draw do
   namespace :manager do
+    mount Sidekiq::Web => "/sidekiq"
+    mount Maily::Engine, at: "/maily"
+
     resources :trips
     resources :passengers, only: [:index]
   end
