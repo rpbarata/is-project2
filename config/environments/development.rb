@@ -82,15 +82,13 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
-    port: 587,
-    domain: ENV.fetch("GMAIL_DOMAIN", ""),
-    user_name: ENV.fetch("GMAIL_USER_NAME", ""),
-    password: ENV.fetch("GMAIL_USER_PASSWORD", ""),
-    authentication: "plain",
-    enable_starttls_auto: true,
+    user_name: ENV.fetch("MAILTRAP_USER_NAME", ""),
+    password: ENV.fetch("MAILTRAP_PASSWORD", ""),
+    address: ENV.fetch("MAILTRAP_ADDRESS", "smtp.mailtrap.io"),
+    domain: ENV.fetch("MAILTRAP_DOMAIN", "smtp.mailtrap.io"),
+    port: ENV.fetch("MAILTRAP_PORT", "2525"),
+    authentication: :cram_md5,
   }
-
   config.after_initialize do
     Bullet.enable = true
     Bullet.sentry = false
