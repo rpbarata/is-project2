@@ -2,6 +2,7 @@
 
 module Manager
   class TripsController < ManagerController
+    before_action :set_trip, only: [:show, :destroy]
     def index
       start_date = params[:start_date]&.in_time_zone
       end_date = params[:end_date]&.in_time_zone
@@ -27,17 +28,42 @@ module Manager
     end
 
     def show
-      @trip = Trip.find(params[:id])
       @passengers = @trip.users.page(params[:page])
     end
 
     def destroy
+      if @trip.departure_time.future?
+        success = false
+        passengers_id = @trip.users.pluck(:id)
+        trip_id = @trip.id
+
+        ActiveRecord::Base.transaction do
+          @trip.tickets.find_each do |ticket|
+            ticket.refund_user
+            ticket.destroy
+          end
+          success = @trip.destroy
+        end
+
+        if success
+          TripMailer.cancel_trip_email(passengers_id, trip_id).deliver_later if passengers_id.present?
+          redirect_to(manager_trips_path, notice: "Trip cancelled")
+        else
+          redirect_to(manager_trips_path, alert: "Unable to cancel trip")
+        end
+      else
+        redirect_to(manager_trips_path(params[:page]), alert: "Unable to cancel trip")
+      end
     end
 
     private
 
     def trip_params
       params.require(:trip).permit(:capacity, :departure_point, :departure_time, :destination, :price)
+    end
+
+    def set_trip
+      @trip = Trip.find(params[:id])
     end
   end
 end

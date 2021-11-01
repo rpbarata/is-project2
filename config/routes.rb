@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  mount Maily::Engine, at: "/maily"
+
   namespace :manager do
     resources :trips
     resources :passengers, only: [:index]

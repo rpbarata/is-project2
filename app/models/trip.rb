@@ -24,6 +24,9 @@ class Trip < ApplicationRecord
   validates :destination, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true
 
+  # Why this callback is not working? It is because rails verify the tickets relations before this callback is called?
+  # before_destroy :cancel_tickets
+
   # validate  :validates_departure_time
   def validates_departure_time
     if departure_time.present? && departure_time < Time.zone.now
@@ -34,6 +37,13 @@ class Trip < ApplicationRecord
   def current_capacity
     capacity - tickets.count
   end
+
+  # def cancel_tickets
+  #   tickets.find_each do |ticket|
+  #     ticket.refund_user
+  #     ticket.destroy
+  #   end
+  # end
 
   class << self
     def select_by_date(start_date, end_date)

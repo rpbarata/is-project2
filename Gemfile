@@ -51,7 +51,8 @@ end
 
 group :development do
   gem "brakeman"
-  gem "letter_opener"
+  gem "maily"
+  # gem "letter_opener" # this gem is not workin. why?
   gem "annotate"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false

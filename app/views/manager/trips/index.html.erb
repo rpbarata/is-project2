@@ -31,7 +31,7 @@
         <th scope="col" class="text-center">Destination</th>
         <th scope="col" class="text-center">Capacity</th>
         <th scope="col" class="text-center">Price</th>
-        <th colspan="1"></th>
+        <th colspan="2"></th>
       </tr>
     </thead>
 
@@ -45,6 +45,11 @@
           <td class="text-center"><%= number_to_currency(trip.price, :unit => "€") %></td>
           <td class="text-center">
             <%= button_to "Show", manager_trip_path(trip), class: "btn btn-primary btn-sm"  %>
+          </td>
+          <td class="text-center">
+            <% if trip.departure_time.future? %>
+              <%= button_to "Delete", manager_trip_path(trip, page: params[:page]), class: "btn btn-danger btn-sm", method: :delete %>
+            <% end %>
           </td>
         </tr>
       <% end %>
