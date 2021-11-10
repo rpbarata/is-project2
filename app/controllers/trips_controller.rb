@@ -5,8 +5,30 @@ class TripsController < ApplicationController
   def index
     start_date = params[:start_date]&.in_time_zone
     end_date = params[:end_date]&.in_time_zone
+    date = params[:date]&.in_time_zone
 
-    @trips = Trip.select_by_date(start_date, end_date).order("departure_time ASC").page(params[:page])
+    @trips =
+      if start_date.present? || end_date.present?
+        Trip.includes([:departure_point, :destination_point])
+          .select(:id, :departure_time, :departure_point_id, :destination_point_id, :price)
+          .select_by_date(start_date, end_date)
+          .order("departure_time ASC")
+          .page(params[:page])
+      elsif date.present?
+        Trip.includes([:departure_point, :destination_point])
+          .select(:id, :departure_time, :departure_point_id, :destination_point_id, :price)
+          .select_by_date(date, date)
+          .order("departure_time ASC")
+          .page(params[:page])
+      else
+        Trip.includes([:departure_point, :destination_point])
+          .select(:id, :departure_time, :departure_point_id, :destination_point_id, :price)
+          .all
+          .order("departure_time ASC")
+          .page(params[:page])
+      end
+
+    @current_user_trip_ids = current_user.trips.pluck(:id)
   end
 
   # PATCH /buy_trip

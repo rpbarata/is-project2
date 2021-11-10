@@ -4,10 +4,12 @@ class RegistrationsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:new, :create]
   before_action :set_user, only: [:edit, :update, :destroy]
 
+  # GET	/sign_up
   def new
     @user = User.new
   end
 
+  # POST	/sign_up
   def create
     @user = User.new(user_params)
 
@@ -22,8 +24,10 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  # GET	/profile
   def edit; end
 
+  # PATCH	/profile
   def update
     params[:user].delete(:password) if params[:user][:password].blank?
 
@@ -37,6 +41,7 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  # DELETE	/delete_account(
   def destroy
     if @user.destroy
       logger.info(t("logger.info.destroy", record_type: @user.model_name.human, id: @user.id))

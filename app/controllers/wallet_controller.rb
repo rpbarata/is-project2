@@ -3,8 +3,10 @@
 class WalletController < ApplicationController
   before_action :set_wallet
 
+  # GET	/wallet
   def show; end
 
+  # PATCH	/wallet
   def update
     if wallet_params[:add_balance].to_d <= 0
       flash.now[:alert] = "You must charge your wallet with a positive value"

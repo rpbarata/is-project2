@@ -7,17 +7,18 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => "/sidekiq"
     mount Maily::Engine, at: "/maily"
 
-    resources :trips
+    resources :trips, except: [:edit, :update]
     resources :passengers, only: [:index]
   end
 
   resources :user_tickets, only: [:index, :destroy]
+  resources :wallet, only: [:show, :update]
 
   get "trips",          to: "trips#index"
   patch "buy_trip/:id", to: "trips#buy_trip", as: "buy_trip"
 
-  get "wallet",   to: "wallet#show"
-  patch "wallet", to: "wallet#update"
+  # get "wallet",   to: "wallet#show"
+  # patch "wallet", to: "wallet#update"
 
   get "sign_up",   to: "registrations#new"
   post "sign_up",  to: "registrations#create"

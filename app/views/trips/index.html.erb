@@ -1,22 +1,49 @@
 <h1 class="mb-3">Available Trips</h1>
 
-<%= form_tag trips_path, method: :get do %>
-  <div class="row">
-    <div class="col">
-      <div class="form-group" style="display: inline-block">
-        <%= label_tag(:start_date, "Start Date") %>
-        <%= date_field_tag :start_date, params[:start_date], class: "form-control", data: { picker: true } %>
-      </div>
-      <div class="form-group" style="display: inline-block">
-        <%= label_tag(:end_date, "End Date") %>
-        <%= date_field_tag :end_date, params[:end_date], class: "form-control", data: { picker: true } %>
-      </div>
-      <div class="form-group"  style="display: inline-block">
-        <%= submit_tag "Search", class: "btn btn-primary btn-sm"%>
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <%= form_tag trips_path, method: :get do %>
+          <div class="row">
+            <div class="col">
+              <div class="form-group" style="display: inline-block">
+                <%= label_tag(:start_date, "Start Date") %>
+                <%= date_field_tag :start_date, params[:start_date], class: "form-control" %>
+              </div>
+              <div class="form-group" style="display: inline-block">
+                <%= label_tag(:end_date, "End Date") %>
+                <%= date_field_tag :end_date, params[:end_date], class: "form-control" %>
+              </div>
+              <div class="form-group"  style="display: inline-block">
+                <%= submit_tag "Search", class: "btn btn-primary btn-sm"%>
+              </div>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
-<% end %>
+  <div class="col">
+    <div class="card">
+      <div class="card-body">
+        <%= form_tag trips_path, method: :get do %>
+          <div class="row">
+            <div class="col">
+              <div class="form-group" style="display: inline-block">
+                <%= label_tag(:date, "Date") %>
+                <%= date_field_tag :date, params[:date], class: "form-control" %>
+              </div>
+              <div class="form-group"  style="display: inline-block">
+                <%= submit_tag "Search", class: "btn btn-primary btn-sm"%>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="table-responsive">
   <table class="table table-sm table-striped table-hover align-middle">
@@ -25,7 +52,6 @@
         <th scope="col" >Departure time</th>
         <th scope="col" class="text-center">Departure point</th>
         <th scope="col" class="text-center">Destination</th>
-        <th scope="col" class="text-center">Capacity</th>
         <th scope="col" class="text-center">Price</th>
         <th colspan="1"></th>
       </tr>
@@ -35,13 +61,14 @@
       <% @trips.each do |trip| %>
         <tr>
           <td><%= l(trip.departure_time) %></td>
-          <td class="text-center"><%= trip.departure_point %></td>
-          <td class="text-center"><%= trip.destination %></td>
-          <td class="text-center"><%= trip.current_capacity %></td>
+          <td class="text-center"><%= trip.departure_point.name %></td>
+          <td class="text-center"><%= trip.destination_point.name %></td>
           <td class="text-center"><%= number_to_currency(trip.price, :unit => "€") %></td>
           <td>
-            <% if !current_user.trips.find_by(id: trip.id) && trip.departure_time.future? %>
-              <%= button_to "Buy", buy_trip_path(trip, page: params[:page]), method: :patch, class: "btn btn-success btn-sm", data: { confirm: 'Are you sure?' } %>
+            <% if !@current_user_trip_ids.include?(trip.id) && trip.departure_time.future? %>
+              <%= button_to "Buy", buy_trip_path(trip, page: params[:page]), method: :patch,
+                  class: "btn btn-success btn-sm", 
+                  data: { confirm: 'Are you sure?' } %>
             <% end %>
           </td>
         </tr>

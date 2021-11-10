@@ -3,17 +3,27 @@
 module Manager
   class TripsController < ManagerController
     before_action :set_trip, only: [:show, :destroy]
+
+    # GET	/manager/trips
     def index
       start_date = params[:start_date]&.in_time_zone
       end_date = params[:end_date]&.in_time_zone
 
-      @trips = Trip.select_by_date(start_date, end_date).order("departure_time ASC").page(params[:page])
+      @trips =
+        Trip.select(:departure_time, :departure_point_id, :destination_point_id, :price, :capacity, :id)
+          .includes([:users, :tickets])
+          .select_by_date(start_date, end_date)
+          .order(departure_time: :asc)
+          .page(params[:page])
     end
 
+    # GET	/manager/trips/new
     def new
       @trip = Trip.new
+      @places = Place.all.order(name: :asc)
     end
 
+    # POST	/manager/trips
     def create
       @trip = Trip.new(trip_params)
 
@@ -27,10 +37,12 @@ module Manager
       end
     end
 
+    # GET	/manager/trips/:id(
     def show
       @passengers = @trip.users.page(params[:page])
     end
 
+    # DELETE	/manager/trips/:id
     def destroy
       if @trip.departure_time.future?
         success = false
@@ -59,7 +71,7 @@ module Manager
     private
 
     def trip_params
-      params.require(:trip).permit(:capacity, :departure_point, :departure_time, :destination, :price)
+      params.require(:trip).permit(:capacity, :departure_point_id, :departure_time, :destination_point_id, :price)
     end
 
     def set_trip

@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_31_150212) do
+ActiveRecord::Schema.define(version: 2021_11_10_204549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "places", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "tickets", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -26,12 +32,15 @@ ActiveRecord::Schema.define(version: 2021_10_31_150212) do
 
   create_table "trips", force: :cascade do |t|
     t.datetime "departure_time"
-    t.string "departure_point"
-    t.string "destination"
     t.integer "capacity"
     t.decimal "price", precision: 8, scale: 2
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "departure_point_id"
+    t.bigint "destination_point_id"
+    t.index ["departure_point_id"], name: "index_trips_on_departure_point_id"
+    t.index ["departure_time"], name: "index_trips_on_departure_time"
+    t.index ["destination_point_id"], name: "index_trips_on_destination_point_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -54,5 +63,7 @@ ActiveRecord::Schema.define(version: 2021_10_31_150212) do
 
   add_foreign_key "tickets", "trips"
   add_foreign_key "tickets", "users"
+  add_foreign_key "trips", "places", column: "departure_point_id"
+  add_foreign_key "trips", "places", column: "destination_point_id"
   add_foreign_key "wallets", "users"
 end

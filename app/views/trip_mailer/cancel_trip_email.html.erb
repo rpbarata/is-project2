@@ -6,8 +6,8 @@
   <body>
     <h3>We are sorry that the following trip was cancelled.</h1>
 
-    <p>Departure Point: <%= @trip.departure_point %></p>
-    <p>Destination: <%= @trip.destination %></p>
+    <p>Departure Point: <%= @trip.departure_point.name %></p>
+    <p>Destination: <%= @trip.destination_point.name %></p>
     <p>Departure Time: <%= @trip.departure_time %></p>
     <p>Price: <%= @trip.price %></p>
 

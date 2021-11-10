@@ -32,10 +32,10 @@
       <% @trips.find_each do |trip| %>
         <tr>
           <td><%= I18n.l(trip.departure_time) %></td>
-          <td><%= trip.departure_point %></td>
-          <td><%= trip.destination %></td>
+          <td><%= trip.departure_point.name %></td>
+          <td><%= trip.destination_point.name %></td>
           <td><%= trip.capacity %></td>
-          <td><%= trip.tickets.count %></td>
+          <td><%= trip.tickets.size %></td>
           <td><%= trip.price %></td>
           <td><%= trip.current_revenue %></td>
         </tr>

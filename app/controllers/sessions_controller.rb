@@ -3,8 +3,10 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:new, :create]
 
+  # GET	/sign_in
   def new; end
 
+  # POST	/sign_in
   def create
     user = User.find_by(email: params[:email])
 

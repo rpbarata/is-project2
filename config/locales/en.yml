@@ -16,6 +16,8 @@ en:
     bought_trip: It was not possible to buy the trip
     cancel_trip: It was not possible to cancel the trip
     charge_wallet: Unable to charge your wallet
+    unauthorized: You are not authorized to access this page
+    not_authenticate: You must be signed in
   logger:
     info:
       new: New %{record_type} created with id = %{id}
@@ -39,6 +41,25 @@ en:
         limit: Limit
     general:
       search: Search
+    pagination:
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
+      truncate: "&hellip;"
+    helpers:
+    page_entries_info:
+      entry:
+        zero: "entries"
+        one: "entry"
+        other: "entries"
+      one_page:
+        display_entries:
+          zero: "No %{entry_name} found"
+          one: "Displaying <b>1</b> %{entry_name}"
+          other: "Displaying <b>all %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Displaying %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b> of <b>%{total}</b> in total"
   activerecord:
     models:
       wallet:
@@ -127,8 +148,8 @@ en:
       - Saturday
     formats:
       default: "%d/%m/%Y"
-      long: "%d de %B de %Y"
-      short: "%d de %B"
+      long: "%d of %B of %Y"
+      short: "%d of %B"
     month_names:
       -
       - January
@@ -297,6 +318,6 @@ en:
     am: am
     formats:
       default: "%A, %d/%m/%Y %H:%Mh"
-      long: "%A, %d de %B de %Y, %H:%Mh"
+      long: "%A, %d of %B of %Y, %H:%Mh"
       short: "%d/%m, %H:%M"
     pm: pm

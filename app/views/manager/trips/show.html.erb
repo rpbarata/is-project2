@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col">
     <div class="d-inline-block">
-      <p class="text"> <span class="fw-bold">Departure Point: </span> <%= @trip.departure_point %></p>
+      <p class="text"> <span class="fw-bold">Departure Point: </span> <%= @trip.departure_point.name %></p>
     </div>
   </div>
 </div>
@@ -9,7 +9,7 @@
 <div class="row">
   <div class="col">
     <div class="d-inline-block">
-      <p class="text"> <span class="fw-bold">Destination: </span> <%= @trip.destination %></p>
+      <p class="text"> <span class="fw-bold">Destination: </span> <%= @trip.destination_point.name %></p>
     </div>
   </div>
 </div>
@@ -43,19 +43,18 @@
   <table class="table table-sm table-striped table-hover align-middle">
     <thead>
       <tr>
-        <th scope="col" >Name</th>
-        <th scope="col" class="text-center">Email</th>
-        <th scope="col" class="text-center">Bought At</th>
+        <th scope="col" >#</th>
+        <th scope="col">Email</th>
+        <th scope="col">Name</th>
       </tr>
     </thead>
 
     <tbody>
-      <% @passengers.each do |passenger| %>
+      <% @passengers.each_with_index do |passenger, i| %>
         <tr>
+          <th scope="row"><%= (i+1) %></th>
+          <td><%= passenger.email %></td>
           <td><%= passenger.username %></td>
-          <td class="text-center"><%= passenger.email %></td>
-          <%# TODO: REMOVE THIS QUERY!!!!%>
-          <td class="text-center"><%= l(passenger.get_ticket(@trip).created_at) %></td>
         </tr>
       <% end %>
     </tbody>

@@ -3,7 +3,7 @@
 module Manager
   module ManagerTripHelper
     def format_trip_capacity(trip)
-      "#{trip.users.count}/#{trip.capacity}"
+      "#{trip.users.size}/#{trip.capacity}"
     end
   end
 end

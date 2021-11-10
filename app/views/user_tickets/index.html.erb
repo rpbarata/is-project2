@@ -16,12 +16,12 @@
       <% @tickets.each do |ticket| %>
         <tr>
           <td><%= l(ticket.trip.departure_time) %></td>
-          <td class="text-center"><%= ticket.trip.departure_point %></td>
-          <td class="text-center"><%= ticket.trip.destination %></td>
+          <td class="text-center"><%= ticket.trip.departure_point.name %></td>
+          <td class="text-center"><%= ticket.trip.destination_point.name %></td>
           <td class="text-center"><%= number_to_currency(ticket.trip.price, :unit => "€") %></td>
           <td class="text-center">
             <% if ticket.future_trip? %>
-              <%= button_to "Return", user_ticket_path(ticket), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-sm"  %>
+              <%= button_to "Return", user_ticket_path(ticket), method: :delete, data: { confirm: 'Are you sure? The ticket will be refunded' }, class: "btn btn-danger btn-sm"  %>
             <% end %>
           </td>
         </tr>

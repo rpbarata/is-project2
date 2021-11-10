@@ -5,11 +5,11 @@
     <%= form_tag manager_trips_path, method: :get do %>
       <div class="form-group" style="display: inline-block">
         <%= label_tag(:start_date, "Start Date") %>
-        <%= date_field_tag :start_date, params[:start_date], class: "form-control", data: { picker: true } %>
+        <%= date_field_tag :start_date, params[:start_date], class: "form-control" %>
       </div>
       <div class="form-group" style="display: inline-block">
         <%= label_tag(:end_date, "End Date") %>
-        <%= date_field_tag :end_date, params[:end_date], class: "form-control", data: { picker: true } %>
+        <%= date_field_tag :end_date, params[:end_date], class: "form-control" %>
       </div>
       <div class="form-group"  style="display: inline-block">
         <%= submit_tag "Search", class: "btn btn-primary btn-sm"%>
@@ -39,18 +39,16 @@
       <% @trips.each do |trip| %>
         <tr>
           <td><%= l(trip.departure_time) %></td>
-          <td class="text-center"><%= trip.departure_point %></td>
-          <td class="text-center"><%= trip.destination %></td>
+          <td class="text-center"><%= trip.departure_point.name %></td>
+          <td class="text-center"><%= trip.destination_point.name %></td>
           <td class="text-center"><%= format_trip_capacity(trip) %></td>
           <td class="text-center"><%= number_to_currency(trip.price, :unit => "€") %></td>
-          <td class="text-center">
-            <%= button_to "Show", manager_trip_path(trip), class: "btn btn-primary btn-sm"  %>
-          </td>
+          <td class="text-center"><%= link_to "Open", manager_trip_path(trip), class: "btn btn-primary btn-sm" %></td>
           <td class="text-center">
             <% if trip.departure_time.future? %>
-              <%= button_to "Delete", manager_trip_path(trip, page: params[:page]), class: "btn btn-danger btn-sm", method: :delete %>
+              <%= link_to "Delete", manager_trip_path(trip, page: params[:page]), class: "btn btn-danger btn-sm", 
+                  method: :delete, data: { confirm: "Are you sure? All tickets will be refunded." } %>
             <% end %>
-          </td>
         </tr>
       <% end %>
     </tbody>

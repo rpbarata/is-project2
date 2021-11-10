@@ -5,7 +5,6 @@ class DailySummaryJob < ApplicationJob
 
   def perform(*args)
     STDOUT.puts("Executing DailySummaryJob".yellow)
-    Rails.logger.info("Executing DailySummaryJob")
 
     today_trips = Trip.today
 

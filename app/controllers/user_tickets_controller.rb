@@ -3,7 +3,11 @@
 class UserTicketsController < ApplicationController
   # GET /tickets
   def index
-    @tickets = current_user.tickets.includes([:trip]).order("created_at DESC").page(params[:page])
+    @tickets =
+      current_user.tickets
+        .includes([trip: [:departure_point, :destination_point]])
+        .order("created_at DESC")
+        .page(params[:page])
   end
 
   # DELETE /tickets/1

@@ -56,6 +56,7 @@ group :development do
   gem "maily"
   # gem "letter_opener" # this gem is not workin. why?
   gem "annotate"
+  gem "rails-erd"
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
   gem "rubocop-shopify", require: false

@@ -4,24 +4,37 @@
 #
 # Table name: trips
 #
-#  id              :bigint           not null, primary key
-#  capacity        :integer
-#  departure_point :string
-#  departure_time  :datetime
-#  destination     :string
-#  price           :decimal(8, 2)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id                   :bigint           not null, primary key
+#  capacity             :integer
+#  departure_time       :datetime
+#  price                :decimal(8, 2)
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  departure_point_id   :bigint
+#  destination_point_id :bigint
+#
+# Indexes
+#
+#  index_trips_on_departure_point_id    (departure_point_id)
+#  index_trips_on_departure_time        (departure_time)
+#  index_trips_on_destination_point_id  (destination_point_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (departure_point_id => places.id)
+#  fk_rails_...  (destination_point_id => places.id)
 #
 class Trip < ApplicationRecord
   has_many :tickets, dependent: :restrict_with_error
   has_many :users, through: :tickets
+  belongs_to :departure_point, class_name: "Place", optional: false
+  belongs_to :destination_point, class_name: "Place", optional: false
 
   validates :capacity, numericality: { only_integer: true, greater_than: 0 }, presence: true
   validates :departure_point, presence: true
   validate  :validates_departure_time
   validates :departure_time, presence: true
-  validates :destination, presence: true
+  validates :destination_point, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }, presence: true
 
   # Why this callback is not working? It is because rails verify the tickets relations before this callback is called?
@@ -52,7 +65,7 @@ class Trip < ApplicationRecord
   # end
 
   def current_revenue
-    tickets.count * price
+    tickets.size * price
   end
 
   class << self
