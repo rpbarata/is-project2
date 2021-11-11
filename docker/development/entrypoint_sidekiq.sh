@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 
+echo "=== INSTALLING DEPENDENCIES ==="
 bundle install
 
 echo "=== STARTING SIDEKIQ ==="

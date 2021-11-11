@@ -37,6 +37,9 @@ config-git
 echo "=== APPLYING LATEST MIGRATIONS ==="
 rails db:migrate
 
+echo "=== APPLYING LATEST SEEDS ==="
+rails db:seed
+
 echo "=== COMPILING ASSETS ==="
 rails assets:precompile --trace
 
